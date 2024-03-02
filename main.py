@@ -1,8 +1,6 @@
 import os
 import sys
 import moderngl as gl
-
-
 # This is the main file that will be ran. 
 # Everything else should ideally be put in a module and imported.
 
