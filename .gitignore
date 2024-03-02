@@ -1,0 +1,11 @@
+# environemnt
+.env
+venv/
+__pycache__
+
+# emacs ide backups
+req.txt~
+.gitignore~
+*.py~
+.env~
+README.md~
