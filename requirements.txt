@@ -1,0 +1,2 @@
+glcontext==2.5.0
+moderngl==5.10.0
