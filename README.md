@@ -1,5 +1,7 @@
 # Collatz Conjecture Vizualizer
 
+![collatz_conjecture](https://github.com/bren-io/cc-visual/assets/45150570/d1be7f08-2731-4115-9fee-99345f7bc6c5)
+
 ## Tech Stack:
 Language: Python
 
