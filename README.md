@@ -8,6 +8,6 @@ ModernGL: an OpenGL Python wrapper
 Numpy
 
 Frontend:
-PyQt
+tkinter
 
 Bren, Lorenzzi, Zach, and Will all collaborated on this project for SIUE ehacks 2024

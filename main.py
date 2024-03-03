@@ -16,7 +16,7 @@ def collatz_sequence(n):
         sequence.append(n)
     return sequence
 
-
+# Makes a list of collatz sequences
 def collatz_sequences_list(integers):
     sequences = []
     for n in integers:
@@ -39,17 +39,18 @@ def generate_branches(sequences):
         branch_lst.append(branches)
     return branch_lst
 
+# init scene
+def make_scene():
+    # Start pygame
+    pygame.init()
 
-# Initialize Pygame
-pygame.init()
+    # Set up display
+    width, height = 800, 600
+    pygame.display.set_mode((width, height), DOUBLEBUF | OPENGL)
 
-# Set up display
-width, height = 800, 600
-pygame.display.set_mode((width, height), DOUBLEBUF | OPENGL)
-
-# Set up OpenGL perspective
-gluPerspective(45, (width / height), 0.1, 50.0)
-glTranslatef(0.0, 0.0, -5)
+    # Set up OpenGL perspective
+    gluPerspective(45, (width / height), 0.1, 50.0)
+    glTranslatef(0.0, 0.0, -5)
 
 
 # Function to draw line
@@ -62,29 +63,40 @@ def draw_line(start, end):
     glEnd()
 
 
-# Main loop
-running = True
-vals = [10, 17, 6, 12, 40, 50, 10, 20, 30, 15]  # Initial value for Collatz sequence
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+def seq_render(usr_input):
+    running = True
+    vals = [10, 17, 6, 12, 40, 50, 10, 20, 30, 15]  # Initial value for Collatz sequence
+    while running:
+        for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                running = False
 
-    # Generate Collatz sequence
-    sequences = collatz_sequences_list(vals)
+        # Generate Collatz sequence
+        sequences = collatz_sequences_list(vals)
 
-    # Generate branches
-    branches_lst = generate_branches(sequences)
+        # Generate branches
+        branches_lst = generate_branches(sequences)
 
-    # Clear screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        # Clear screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-    for branches in branches_lst:
-        for branch in branches:
-            draw_line(branch[0], branch[1])
+        for branches in branches_lst:
+            for branch in branches:
+                draw_line(branch[0], branch[1])
 
-    # Update display
-    pygame.display.flip()
-    pygame.time.wait(1000)  # Adjust the delay for visualization
+        # Update display
+        pygame.display.flip()
+        pygame.time.wait(1000)  # Adjust the delay for visualization
 
-pygame.quit()
+    pygame.quit()
+
+def main():
+    # Start GUI (tip look at tkinter app loop)
+    # Get user input (from the gui usually, should be cached)
+    # Generate the collatz sequence from the input (look at seq_render())
+    # Save ??? (ideally store all data generated from user input to json, maybe later)
+    # Else just reset and prompt user for more inputs (would save time instead of rebooting the program)
+    return 0
+
+if __name__ == "__main__":
+    main()
