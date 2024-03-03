@@ -96,11 +96,12 @@ def main():
     while GetUserData().mainloop():
     # Get user input (from the gui usually, should be cached)
         userInput = GetUserData()
+        print(userInput)
     # Generate the collatz sequence from the input (look at seq_render())
-        seq_render(userInput)
+       # seq_render(userInput)
     # Save ??? (ideally store all data generated from user input to json, maybe later)
     # Else just reset and prompt user for more inputs (would save time instead of rebooting the program)
-    return 0
+    # return 0
 
 if __name__ == "__main__":
     main()
