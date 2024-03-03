@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from UI.inputData import *
 import random
 
 
@@ -69,7 +70,7 @@ def seq_render(usr_input):
     while running:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                running = False
+                    running = False
 
         # Generate Collatz sequence
         sequences = collatz_sequences_list(vals)
@@ -92,8 +93,11 @@ def seq_render(usr_input):
 
 def main():
     # Start GUI (tip look at tkinter app loop)
+    while GetUserData().mainloop():
     # Get user input (from the gui usually, should be cached)
+        userInput = GetUserData()
     # Generate the collatz sequence from the input (look at seq_render())
+        seq_render(userInput)
     # Save ??? (ideally store all data generated from user input to json, maybe later)
     # Else just reset and prompt user for more inputs (would save time instead of rebooting the program)
     return 0
