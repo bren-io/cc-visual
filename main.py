@@ -1,11 +1,10 @@
 import pygame
-from OpenGL.raw.GLU import gluPerspective
-from pygame import surface
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import random
 
-
+# Function to generate Collatz sequence
 def collatz_sequence(n):
     sequence = [n]
     while n != 1:
@@ -16,74 +15,73 @@ def collatz_sequence(n):
         sequence.append(n)
     return sequence
 
+def collatz_sequences_list(integers):
+    sequences = []
+    for n in integers:
+        sequences.append(collatz_sequence(n))
 
-def draw_collatz_tree(starting_points):
-    for val in starting_points:
-        sequence = collatz_sequence(val)
-        x, y, z = 1, 1, 0
-
-
-        # each starting point will have a line
-        # point on x, y, z coordinates
-        seq_lines = []
-        seq_vertices = []
-        for idx, num in enumerate(sequence):
-            glBegin(GL_LINES)
-            if idx < len(sequence) - 1:
-                seq_lines.append((num, sequence[idx + 1]))
-
-            if sequence[idx] % 2 == 0:
-                # rotation
-                x += 1
-            else:
-                # rotation
-                x -= 1
-                y += 1
-
-            vertex = (x, y, z)
-            seq_vertices.append(vertex)
-            print(vertex)
-            glVertex3f(*vertex)
-            glEnd()
-            glTranslatef(x, y, z)  # Move to the next position
-
-        # create vertex for each node/point from the sequence values
+    return sequences
 
 
 
-            # # Ensure points stay within the display frame
-            # if abs(x) > 25:  # Adjust this value based on your requirement
-            #     x *= -1
-            # if abs(y) > 20:  # Adjust this value based on your requirement
-            #     y *= -1  # Move points back within frame
-        print(seq_lines)
+# Function to generate branches
+def generate_branches(sequence):
+    branch_lst = []
+    for sequence in sequences:
+        branches = []
+        line_start = (0, 0, 0)  # Start point of branch
+        for i in range(len(sequence) - 1):
+
+            angle = random.uniform(-0.3, 0.3)  # Random angle for branching
+            length = random.uniform(0.5, 0.8)  # Random length for branching
+            line_end = (sequence[i] / 100 + length * angle, sequence[i+1] / 100 + length, 0)  # End point of branch
+            branches.append((line_start, line_end))
+            line_start = line_end
+        branch_lst.append(branches)
+    return branch_lst
+
+# Initialize Pygame
+pygame.init()
+
+# Set up display
+width, height = 800, 600
+pygame.display.set_mode((width, height), DOUBLEBUF | OPENGL)
+
+# Set up OpenGL perspective
+gluPerspective(45, (width / height), 0.1, 50.0)
+glTranslatef(0.0, 0.0, -5)
+
+# Function to draw line
+def draw_line(start, end):
+    glBegin(GL_LINES)
+    glVertex3fv(start)
+    glVertex3fv(end)
+    glEnd()
+
+# Main loop
+running = True
+vals = [10, 17, 6, 12, 40, 50, 10, 20, 30, 15]  # Initial value for Collatz sequence
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Generate Collatz sequence
+    sequences = collatz_sequences_list(vals)
+
+    # Generate branches
+    branches_lst = generate_branches(sequences)
+
+    # Clear screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+    for branches in branches_lst:
+        for branch in branches:
+            draw_line(branch[0], branch[1])
+
+    # Update display
+    pygame.display.flip()
+    pygame.time.wait(100)  # Adjust the delay for visualization
 
 
-
-def main():
-    pygame.init()
-    display = (800, 600)
-    pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-    gluPerspective(90, (display[0] / display[1]), 0.1, 50.0)
-
-    glTranslate(0, -60, -5)
-    glRotatef(20, 0, 0, 0)
-
-    start_vals = [6, 14, 17]
-
-    draw_collatz_tree(start_vals)
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        # call collatz function
-        pygame.display.flip()
-        pygame.time.wait(10)
-
-
-
-
-if __name__ == "__main__":
-    main()
+pygame.quit()
