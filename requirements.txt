@@ -1,5 +1,7 @@
 appdirs==1.4.4
 blessed==1.20.0
+customtkinter==5.2.2
+darkdetect==0.8.0
 flyingcircus==0.1.4.1
 glcontext==2.5.0
 moderngl==5.10.0
@@ -8,12 +10,15 @@ multipledispatch==1.0.0
 numpy==1.26.4
 packaging==23.2
 Pillow==10.0.1
+pygame==2.5.2
 pyglet==2.0.12
+PyOpenGL==3.1.7
 PyQt5-Qt5==5.15.12
 PyQt5-sip==12.13.0
 pyrr==0.10.3
 pytk==0.0.2.1
 setuptools-scm==8.0.4
 six==1.16.0
+tk==0.1.0
 typing_extensions==4.10.0
 wcwidth==0.2.13

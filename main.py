@@ -28,13 +28,12 @@ def collatz_sequences_list(integers):
 # Function to generate branches
 def generate_branches(sequences):
     branch_lst = []
+    line_start = (0, 0, 0)  # Start point of branch
     for sequence in sequences:
         branches = []
-        line_start = (0, 0, 0)  # Start point of branch
         for i in range(len(sequence) - 1):
-            angle = random.uniform(-0.3, 0.3)  # Random angle for branching
             length = random.uniform(0.5, 0.8)  # Random length for branching
-            line_end = (sequence[i] / 100 + length * angle, sequence[i + 1] / 100 + length, 0)  # End point of branch
+            line_end = (sequence[i] / 100 + length, sequence[i + 1] / 100 + length, 0)  # End point of branch
             branches.append((line_start, line_end))
             line_start = line_end
         branch_lst.append(branches)
@@ -55,6 +54,8 @@ glTranslatef(0.0, 0.0, -5)
 
 # Function to draw line
 def draw_line(start, end):
+    angle = random.uniform(-0.3, 0.3)  # Random angle for branching
+    glRotatef(angle, 0.0, 1.0, 0.0)
     glBegin(GL_LINES)
     glVertex3fv(start)
     glVertex3fv(end)
@@ -84,6 +85,6 @@ while running:
 
     # Update display
     pygame.display.flip()
-    pygame.time.wait(100)  # Adjust the delay for visualization
+    pygame.time.wait(1000)  # Adjust the delay for visualization
 
 pygame.quit()
