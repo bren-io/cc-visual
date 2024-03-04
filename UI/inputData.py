@@ -16,34 +16,18 @@ class GetUserData(ctk.CTk):
         self.title = ctk.CTkLabel(self, text="Collatz Conjecture", font=ctk.CTkFont(size=100))
         self.title.place(x=50, y=20)
 
-        #get entry data
-        def submit_button():
-            entry1data=self.entry1.get()
-            entry2data=self.entry2.get()
-            entry3data=self.entry3.get()
+    #get entry data
+    def submit_button():
+        entry1data=self.entry1.get()
+        entry2data=self.entry2.get()
+        entry3data=self.entry3.get()
 
-            dataList=[entry1data, entry2data, entry3data]
-            print(dataList)
-            '''
-            for entry in dataList:
-                if not entry.isdigit():
-                    return
-                
-                entry = int(entry)
-                if not (lowerBound <= entry <= upperBound):
-                    return
-            '''
-            return dataList
+        dataList=[entry1data, entry2data, entry3data]
+        print(dataList)
 
+        return dataList
 
-
-
-            #return(dataList)
-            #success test
-            #successLabel = ctk.CTkLabel(self, text=entry1data)
-            #successLabel.grid(row=4, column=0)
-
-       # def user_input():
+    def user_input():
         #first num
         self.entry1 = ctk.CTkEntry(self, width=400, height=30)
         self.startNum1 = ctk.CTkLabel(self, text="First starting number", font=ctk.CTkFont(size=20))
@@ -66,4 +50,4 @@ class GetUserData(ctk.CTk):
         self.submitButton = ctk.CTkButton(self, text="Submit", command = submit_button)
         self.submitButton.place(x=400, y=350)
          
-GetUserData().mainloop()
+#GetUserData().mainloop()
