@@ -2,7 +2,6 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from UI.inputData import *
 import random
 
 
@@ -15,12 +14,15 @@ def collatz_sequence(n):
         else:
             n = 3 * n + 1
         sequence.append(n)
+
+    if sequence[-1] != 1:
+        sequence.append(1)
     return sequence
 
 # Makes a list of collatz sequences
-def collatz_sequences_list(integers):
-    sequences = []
-    for n in integers:
+def collatz_sequences_list(start_points):
+    sequences = [start_points]
+    for n in start_points:
         sequences.append(collatz_sequence(n))
 
     return sequences
@@ -57,7 +59,7 @@ def make_scene():
 # Function to draw line
 def draw_line(start, end):
     angle = random.uniform(-0.3, 0.3)  # Random angle for branching
-    glRotatef(angle, 0.0, 1.0, 0.0)
+    glRotatef(angle, 1.0, 1.0, 1.0)
     glBegin(GL_LINES)
     glVertex3fv(start)
     glVertex3fv(end)
@@ -87,19 +89,18 @@ def seq_render(usr_input):
 
         # Update display
         pygame.display.flip()
-        pygame.time.wait(1000)  # Adjust the delay for visualization
+        pygame.time.wait(10)  # Adjust the delay for visualization
 
     pygame.quit()
 
 def main():
     # Start GUI (tip look at tkinter app loop)
-    while GetUserData().mainloop():
     # Get user input (from the gui usually, should be cached)
-        userInput = GetUserData()
     # Generate the collatz sequence from the input (look at seq_render())
-        seq_render(userInput)
     # Save ??? (ideally store all data generated from user input to json, maybe later)
     # Else just reset and prompt user for more inputs (would save time instead of rebooting the program)
+    make_scene()
+    seq_render(0)
     return 0
 
 if __name__ == "__main__":
